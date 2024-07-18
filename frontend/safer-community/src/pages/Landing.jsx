@@ -28,7 +28,7 @@ export default function Component() {
               href="#about"
               className="text-xl text-black hover:text-[#7D9B76] font-medium hover:underline underline-offset-4"
             >
-              Home
+              About
             </a>
             <a
               href="#features"
@@ -55,7 +55,7 @@ export default function Component() {
                   </p>
                 </div>
                 <Link
-                  to="register"
+                  to="/home"
                   className="inline-flex h-10 items-center justify-center rounded-md hover:scale-105 hover:text-white bg-[#7D9B76] px-8 text-sm font-medium text-primary-foreground shadow transition-all hover:bg-[#7D9B76]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                   prefetch={false}
                 >
