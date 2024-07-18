@@ -31,12 +31,13 @@ export default function Component() {
               alt="Logo"
               //className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
             />
-            <a
-              href="#features"
-              className="text-xl text-black hover:text-[#7D9B76] cursor-pointer font-medium hover:underline underline-offset-4"
+            <Link
+              to="/crimehotspots"
+              className="text-xl text-black hover:text-[#7D9B76] font-medium hover:underline underline-offset-4"
+              prefetch={false}
             >
               Crime Hotspots
-            </a>
+            </Link>
           </nav>
         </div>
       </header>

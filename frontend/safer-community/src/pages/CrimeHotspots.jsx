@@ -24,18 +24,20 @@ export default function Component() {
             <span className="sr-only">SaferCommunity</span>
           </Link>
           <nav className="flex gap-4 sm:gap-6">
-            <a
-              href="#about"
+            <img
+              src={crimeHotspot}
+              width="30"
+              height="30"
+              alt="Logo"
+              //className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+            />
+            <Link
+              to="/home"
               className="text-xl text-black hover:text-[#7D9B76] font-medium hover:underline underline-offset-4"
+              prefetch={false}
             >
               Safety AI Chatbot
-            </a>
-            <a
-              href="#features"
-              className="text-xl text-black hover:text-[#7D9B76] cursor-pointer font-medium hover:underline underline-offset-4"
-            >
-              Crime Hotspots
-            </a>
+            </Link>
           </nav>
         </div>
       </header>
