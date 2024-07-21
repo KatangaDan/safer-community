@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 // OpenAI API Key
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const OPENAI_API_KEY = process.env.CHATGPT_API_KEY;
 
 // Example data for Johannesburg areas
 const AREA_DATA = `
@@ -468,7 +468,7 @@ app.post("/query", async (req, res) => {
           { role: "system", content: BASE_PROMPT },
           { role: "user", content: query },
         ],
-        max_tokens: 100,
+        max_tokens: 500,
       },
       {
         headers: {
