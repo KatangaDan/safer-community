@@ -3,6 +3,7 @@ import hero from "../assets/hero1.jpg";
 import logo from "../assets/logo.png";
 import crimeHotspot from "../assets/crimehotspotslogo.svg";
 import robot from "../assets/robot.svg";
+import Chat from "./Chat";
 
 export default function Component() {
   return (
