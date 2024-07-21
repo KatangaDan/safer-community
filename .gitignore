@@ -1,12 +1,4 @@
-# Backend ignores
-backend/node_modules/
-backend/.env
-backend/dist/
-
-# Frontend ignores
-frontend/node_modules/
-frontend/.env
-frontend/build/
-
-# Common ignores
+# General ignores
+**/node_modules/
+**/.env
 *.log
