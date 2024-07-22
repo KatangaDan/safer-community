@@ -8,19 +8,26 @@ import { Button } from "@/components/ui/button";
 
 export default function Chat() {
   return (
-    <div className="flex flex-col h-screen bg-[#ffe0b2] p-4">
+    <div className="flex flex-col h-full bg-[#7D9B76] p-4">
       <div className="flex-1 overflow-y-auto p-4 bg-white rounded-lg shadow-md">
-        <div className="space-y-4">
+        <div className="space-y-4 ">
           <div>
-            <div className="text-sm font-semibold">Mary</div>
-            <div className="inline-block p-2 mt-1 text-sm text-white bg-blue-500 rounded-full">
+            <div className="text-sm font-semibold text-black">
+              Safety AI Chatbot
+            </div>
+            <div className="inline-block p-2 mt-1 text-sm text-white bg-[#1F5014] rounded-xl">
               Hey guys!
             </div>
           </div>
-          <div>
-            <div className="text-sm font-semibold">Eve</div>
-            <div className="inline-block p-2 mt-1 text-sm text-white bg-gray-500 rounded-lg">
-              11:50: Hey! Eve here. react-chat-ui is pretty dooope.
+        </div>
+
+        <div className="space-y-4 ">
+          <div className=" flex flex-col items-end ">
+            <div className="text-sm font-semibold text-black text-right">
+              You
+            </div>
+            <div className="inline-block p-2 mt-1 text-sm text-white bg-[#1F5014] rounded-xl ">
+              Im going to sandton city tommorrow, is it safe?
             </div>
           </div>
         </div>
@@ -29,9 +36,9 @@ export default function Chat() {
         <Input
           type="text"
           placeholder="Type a message..."
-          className="w-full p-4 text-sm bg-white border rounded-full shadow-md"
+          className="w-full p-4 text-sm bg-white border rounded-full shadow-md text-black"
         />
-        <Button className="p-2 text-white bg-blue-500 rounded-full">
+        <Button className="p-2 text-white bg-[#1F5014] rounded-full">
           <SendIcon className="w-6 h-6" />
         </Button>
       </div>
