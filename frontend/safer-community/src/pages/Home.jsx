@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import hero from "../assets/hero1.jpg";
 import logo from "../assets/logo.png";
 import crimeHotspot from "../assets/crimehotspotslogo.svg";
 import robot from "../assets/robot.svg";
 import Chat from "./Chat";
+import Loader from "./Loader";
 
 export default function Component() {
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import hero from "../assets/hero1.jpg";
 import logo from "../assets/logo.png";
@@ -6,9 +6,11 @@ import crimeHotspot from "../assets/crimehotspotslogo.svg";
 import robot from "../assets/robot.svg";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import Loader from "./Loader"; // Ensure this is the correct path to your Loader component
 
 export default function Component() {
   const mapRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true); // State for managing loader visibility
 
   useEffect(() => {
     let map;
@@ -58,13 +60,18 @@ export default function Component() {
           }
 
           map.on("click", onMapClick);
+
+          // Hide the loader once the map is successfully initialized
+          setIsLoading(false);
         },
         function () {
           alert("Error in retrieving position.");
+          setIsLoading(false); // Hide the loader even if there's an error
         }
       );
     } else {
       alert("Geolocation is not supported by this browser.");
+      setIsLoading(false); // Hide the loader if geolocation is not supported
     }
 
     return () => {
@@ -104,13 +111,12 @@ export default function Component() {
         </div>
       </header>
       <main>
-        <div>
-          <div
-            ref={mapRef}
-            className="map"
-            style={{ height: "500px", width: "100%" }}
-          ></div>
-        </div>
+        {isLoading && <Loader />} {/* Show loader while loading */}
+        <div
+          ref={mapRef}
+          className="map"
+          style={{ height: "500px", width: "100%" }}
+        ></div>
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-black">
