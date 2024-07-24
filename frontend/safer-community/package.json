@@ -12,6 +12,7 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
     "autoprefixer": "^10.4.19",
+    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "leaflet": "^1.9.4",

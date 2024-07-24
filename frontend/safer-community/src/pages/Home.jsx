@@ -15,7 +15,7 @@ export default function Component() {
           <Link
             href="#"
             className="flex items-center justify-center text-black hover:text-[#7D9B76]"
-            prefetch={false}
+            prefetch="false"
           >
             <img
               src={logo}
@@ -37,7 +37,7 @@ export default function Component() {
             <Link
               to="/crimehotspots"
               className="text-xl text-black hover:text-[#7D9B76] font-medium hover:underline underline-offset-4"
-              prefetch={false}
+              prefetch="false"
             >
               Crime Hotspots
             </Link>

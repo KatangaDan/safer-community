@@ -12,7 +12,7 @@ export default function Component() {
           <Link
             href="#"
             className="flex items-center justify-center text-black hover:text-[#7D9B76]"
-            prefetch={false}
+            prefetch="false"
           >
             <img
               src={logo}
@@ -58,7 +58,7 @@ export default function Component() {
                 <Link
                   to="/home"
                   className="inline-flex h-10 items-center justify-center rounded-md hover:scale-105 text-white hover:text-white bg-[#7D9B76] px-8 text-sm font-medium text-primary-foreground shadow transition-all hover:bg-[#7D9B76]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                  prefetch={false}
+                  prefetch="false"
                 >
                   Get Started
                 </Link>
@@ -101,7 +101,9 @@ export default function Component() {
                   alt="Logo"
                   //className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
                 />
-                <h3 className="text-xl font-bold text-black">Visualize Crime Hotspots</h3>
+                <h3 className="text-xl font-bold text-black">
+                  Visualize Crime Hotspots
+                </h3>
                 <p className="text-gray-700">
                   See real-time interactive maps highlighting crime hotspots in
                   your area to plan safer routes and stay informed.
@@ -115,7 +117,9 @@ export default function Component() {
                   alt="Logo"
                   //className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
                 />
-                <h3 className="text-xl font-bold text-black">Safety AI Chatbot</h3>
+                <h3 className="text-xl font-bold text-black">
+                  Safety AI Chatbot
+                </h3>
                 <p className="text-gray-700">
                   Our AI chatbot provides support and information on crime and
                   related trauma, offering guidance and resources whenever you
@@ -133,15 +137,15 @@ export default function Component() {
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link
             href="#"
-            className="text-xs hover:underline underline-offset-4 text-white" 
-            prefetch={false}
+            className="text-xs hover:underline underline-offset-4 text-white"
+            prefetch="false"
           >
             Terms of Service
           </Link>
           <Link
             href="#"
             className="text-xs hover:underline underline-offset-4 text-white"
-            prefetch={false}
+            prefetch="false"
           >
             Privacy
           </Link>

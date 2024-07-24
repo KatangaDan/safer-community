@@ -88,7 +88,7 @@ export default function Component() {
           <Link
             to="#"
             className="flex items-center justify-center text-black hover:text-[#7D9B76]"
-            prefetch={false}
+            prefetch="false"
           >
             <img src={logo} width="45" height="45" alt="Logo" />
             <span className="sr-only">SaferCommunity</span>
@@ -103,7 +103,7 @@ export default function Component() {
             <Link
               to="/home"
               className="text-xl text-black hover:text-[#7D9B76] font-medium hover:underline underline-offset-4"
-              prefetch={false}
+              prefetch="false"
             >
               Safety AI Chatbot
             </Link>
@@ -126,14 +126,14 @@ export default function Component() {
           <Link
             to="#"
             className="text-xs hover:underline underline-offset-4 text-black"
-            prefetch={false}
+            prefetch="false"
           >
             Terms of Service
           </Link>
           <Link
             to="#"
             className="text-xs hover:underline underline-offset-4 text-black"
-            prefetch={false}
+            prefetch="false"
           >
             Privacy
           </Link>
