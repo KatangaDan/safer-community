@@ -2,15 +2,19 @@ import { useState, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import logo from "../assets/logo.png";
+import destination from "../assets/destination.png";
+import dui from "../assets/racing.png";
 
 export default function Chat() {
   // State to manage loading status
   const [isLoading, setIsLoading] = useState(false);
+  const maxChars = 200;
 
   const [input, setInput] = useState("");
   const [userMessages, setUserMessages] = useState([]);
   const [botMessages, setBotMessages] = useState([
-    "Hey guys! I'm here to help you with any safety related questions within the Johannesburg area.",
+    "Hello! How can I help you?",
   ]);
 
   useEffect(() => {
@@ -95,40 +99,65 @@ export default function Chat() {
         ref={chatContainerRef}
         className="flex-1 overflow-y-auto p-4 bg-white rounded-lg shadow-md"
       >
-        {/* ChatBot Message */}
-        {/* <div className="space-y-4 ">
-          <div>
-            <div className="text-sm font-semibold text-black">
-              Safety AI Chatbot
-            </div>
-            <div className="inline-block p-2 mt-1 text-sm text-white bg-[#1F5014] rounded-xl">
-              Hey guys! I'm here to help you with any safety related questions
-              within the Johannesburg area.
+        {/* Pre-Prompt Recomendations */}
+        <div className="hidden">
+          <div className=" flex justify-center">
+            <img
+              src={logo}
+              width="85"
+              height="85"
+              alt="Logo"
+              //className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+            />
+          </div>
+          <div className="flex flex-col">
+            <div className="mx-auto max-w-5xl gap-6 lg:gap-12 py-4 flex flex-col items-center">
+              <div className="gap-1 border border-gray-500 rounded-lg p-1 flex flex-col justify-center items-center w-[417px] h-[80px] hover hover:bg-[#e3fadb] cursor-pointer">
+                <img
+                  src={destination}
+                  width="30"
+                  height="30"
+                  alt="Logo"
+                  //className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+                />
+                <p className="text-gray-700 text-sm">
+                  I am travelling to Sandton, what should I be careful for?
+                </p>
+              </div>
+              <div className="flex flex-col justify-center items-center gap-1 border border-gray-500 rounded-lg p-1 w-[417px] h-[80px] hover hover:bg-[#e3fadb] cursor-pointer">
+                <img
+                  src={dui}
+                  width="40"
+                  height="40"
+                  alt="Logo"
+                  //className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+                />
+                <p className="text-gray-700 text-sm">
+                  What are the most common areas of DUIs?
+                </p>
+              </div>
             </div>
           </div>
-        </div> */}
-
-        {/* User Message */}
-        {/* <div className="space-y-4 ">
-          <div className=" flex flex-col items-end ">
-            <div className="text-sm font-semibold text-black text-right">
-              You
-            </div>
-            <div className="inline-block p-2 mt-1 text-sm text-white bg-[#1F5014] rounded-xl ">
-              I'm going to Sandton City tomorrow, is it safe?
-            </div>
-          </div>
-        </div> */}
-
+        </div>
         <div className="space-y-4">
           {messages.map((message, index) =>
             message.type === "bot" ? (
               <div key={index}>
-                <div className="text-sm font-semibold text-black">
-                  Safety AI Chatbot
+                <div className="flex flex-row items-center">
+                  <img
+                    src={logo}
+                    width="30"
+                    height="30"
+                    alt="Logo"
+                    //className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+                  />
+                  <div className="text-sm font-semibold text-black">
+                    Safety AI Chatbot
+                  </div>
                 </div>
+
                 <div
-                  className="inline-block p-2 mt-1 text-sm text-white bg-[#1F5014] rounded-xl"
+                  className="inline-block p-2 mt-1 text-sm text-black bg-[#F6F6E9] rounded-xl border border-gray-500"
                   dangerouslySetInnerHTML={processText(message.text)}
                 ></div>
               </div>
@@ -163,11 +192,14 @@ export default function Chat() {
           onClick={handleClick}
         >
           {isLoading ? (
-            <div className="loader"></div> // Loader is displayed when loading
+            <div className="btnloader"></div> // Loader is displayed when loading
           ) : (
             <SendIcon className="w-6 h-6" />
           )}
         </Button>
+      </div>
+      <div className="text-xs text-white mt-2">
+        {maxChars - input.length} characters remaining
       </div>
     </div>
   );
