@@ -436,9 +436,12 @@ const AREA_DATA = `
 }
 `;
 
+
+
 // Define a combined prompt for both safety advice and emergency numbers
 const BASE_PROMPT = `
-You are an AI that provides safety advice and emergency information for people traveling through Johannesburg. Based on the area they mention, give them practical safety tips and information about any known dangers. Also, provide emergency numbers if requested.
+You are an AI specializing in providing safety advice and emergency information for travelers in Johannesburg. When a user mentions an area, offer practical safety tips and detailed information about known dangers based on crime data for that location. 
+Provide emergency contact numbers and the address of that areas police station.
 The data provided includes c (crime), the area, and the rate (amount of times it has happened).
 
 Data: ${AREA_DATA}
