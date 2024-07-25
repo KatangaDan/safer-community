@@ -7,13 +7,53 @@ import robot from "../assets/robot.svg";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Loader from "./Loader"; // Ensure this is the correct path to your Loader component
+import axios from 'axios';
+
+import { violentCrimeHotspots,propertyCrimeHotspots,drugWeaponHotspots,childRelatedHotspots } from "../../../../backend/data";
 
 export default function Component() {
   const mapRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true); // State for managing loader visibility
 
+
+// Function to get GPS coordinates using Nominatim API
+  const getCoordinates = async (area) => {
+    try {
+        const response = await axios.get('https://nominatim.openstreetmap.org/search', {
+            params: {
+                q: area + ', Johannesburg, South Africa', // Ensure area context
+                format: 'json',
+                limit: 1
+            }
+        });
+        if (response.data.length > 0) {
+            return {
+                area,
+                latitude: response.data[0].lat,
+                longitude: response.data[0].lon
+            };
+        } else {
+            return { area, latitude: null, longitude: null };
+        }
+    } catch (error) {
+        console.error(`Error fetching coordinates for ${area}:`, error);
+        return { area, latitude: null, longitude: null };
+    }
+};
+
+// Get coordinates for all hotspots
+  const getAllHotspotCoordinates = async (hotspots) => {
+    const promises = hotspots.map(area => getCoordinates(area));
+    const results = await Promise.all(promises);
+    return results;
+};
+
   useEffect(() => {
     let map;
+
+    console.log(violentCrimeHotspots);
+  
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         function (position) {
@@ -31,35 +71,106 @@ export default function Component() {
 
           var marker = L.marker([latitude, longitude]).addTo(map);
           marker.bindPopup("You are here").openPopup();
-          console.log("Latitude: " + latitude + ", Longitude: " + longitude);
 
-          var dangerZones = [
-            [-26.1386, 28.0873],
-            [-26.1344, 28.104106],
-            // Add more coordinate pairs here if needed
-          ];
+          // Define colors for different crime types
+          const crimeColors = {
+            'Violent Crimes': '#f03',
+            'Property Related Crimes': '#ff7800',
+            'Drug and Weapon Related Crimes': '#800080',
+            'Child Related Crime': '#0000ff'
+        };
 
-          dangerZones.forEach(function (coordinate) {
-            var circle = L.circle(coordinate, {
-              color: "red",
-              fillColor: "#f03",
-              fillOpacity: 0.5,
-              radius: 500,
-            }).addTo(map);
-            circle.bindPopup("This is a danger zone");
-          });
+        const legend = L.control({ position: 'bottomleft' });
+        legend.onAdd = () => {
+          const div = L.DomUtil.create('div', 'info legend');
+          const categories = Object.keys(crimeColors);
+          div.style.backgroundColor = 'white';
+          div.style.padding = '10px';
+          div.style.borderRadius = '5px';
 
-          // Custom function to do something when the map is clicked on
-          var popup2 = L.popup();
 
-          function onMapClick(e) {
-            popup2
-              .setLatLng(e.latlng)
-              .setContent("You clicked the map at " + e.latlng.toString())
-              .openOn(map);
+          // Add styles for the <i> elements
+          const style = document.createElement('style');
+          style.innerHTML = `
+            .info.legend i {
+              width: 15px;
+              height: 15px;
+              float: left;
+              margin-right: 8px;
+              opacity: 0.7;
+
+            }
+          `;
+          document.head.appendChild(style);
+          for (let i = 0; i < categories.length; i++) {
+            div.innerHTML +=
+              '<i style="background:' + crimeColors[categories[i]] +'"></i> '+
+              '<span style="color: black;">' + categories[i] + '</span><br>';
           }
 
-          map.on("click", onMapClick);
+          return div;
+        };
+
+        legend.addTo(map);
+          
+
+          // populate the map with crime hotspots
+
+          getAllHotspotCoordinates(violentCrimeHotspots).then(coordinates => {
+            coordinates.forEach(location => {
+                if (location.latitude && location.longitude) {
+                    var circle = L.circle([location.latitude,location.longitude], {
+                        color: 'red',
+                        fillColor: '#f03',
+                        fillOpacity: 0.5,
+                        radius: 500
+                    }).addTo(map);
+                    circle.bindPopup("This is a Violent Crime Hotspot");
+                }
+            });
+        });
+
+        getAllHotspotCoordinates(propertyCrimeHotspots).then(coordinates => {
+            coordinates.forEach(location => {
+                if (location.latitude && location.longitude) {
+                    var circle = L.circle([location.latitude,location.longitude], {
+                        color: 'orange',
+                        fillColor: '#ff7800',
+                        fillOpacity: 0.5,
+                        radius: 500
+                    }).addTo(map);
+                    circle.bindPopup("This is a Property Related Crime Hotspot");
+                }
+            });
+        });
+
+        getAllHotspotCoordinates(drugWeaponHotspots).then(coordinates => {
+            coordinates.forEach(location => {
+                if (location.latitude && location.longitude) {
+                    var circle = L.circle([location.latitude,location.longitude], {
+                        color: 'purple',
+                        fillColor: '#800080',
+                        fillOpacity: 0.5,
+                        radius: 500
+                    }).addTo(map);
+                    circle.bindPopup("This is a Drug and Weapon Related Crime Hotspot");
+                }
+            });
+        });
+
+        getAllHotspotCoordinates(childRelatedHotspots).then(coordinates => {
+            coordinates.forEach(location => {
+                if (location.latitude && location.longitude) {
+                    var circle = L.circle([location.latitude,location.longitude], {
+                        color: 'blue',
+                        fillColor: '#0000ff',
+                        fillOpacity: 0.5,
+                        radius: 500
+                    }).addTo(map);
+                    circle.bindPopup("This is a Child Related Crime Hotspot");
+                }
+            });
+        });
 
           // Hide the loader once the map is successfully initialized
           setIsLoading(false);
