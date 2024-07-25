@@ -503,13 +503,13 @@ const tallyCrimes = (data, crimesType) => {
 //tally violent crimes
 const violentCrimesTally = tallyCrimes(AREA_DATA.data, violentCrimes);
 
-//tally violent crimes
+//tally property crimes
 const propertyCrimeTally = tallyCrimes(AREA_DATA.data, propertyCrimes);
 
-//tally violent crimes
+//tally drug & weapon crimes
 const drugWeaponCrimesTally = tallyCrimes(AREA_DATA.data, drugWeaponCrimes);
 
-//tally violent crimes
+//tally child related crimes
 const childRelatedCrimesTally = tallyCrimes(AREA_DATA.data, childRelatedCrimes);
 
 function generateHotspots(crimeTally){
@@ -526,45 +526,12 @@ function generateHotspots(crimeTally){
 
 }
 
-// Function to get GPS coordinates using Nominatim API
-  const getCoordinates = async (area) => {
-    try {
-        const response = await axios.get('https://nominatim.openstreetmap.org/search', {
-            params: {
-                q: area + ', Johannesburg, South Africa', // Ensure area context
-                format: 'json',
-                limit: 1
-            }
-        });
-        if (response.data.length > 0) {
-            return {
-                area,
-                latitude: response.data[0].lat,
-                longitude: response.data[0].lon
-            };
-        } else {
-            return { area, latitude: null, longitude: null };
-        }
-    } catch (error) {
-        console.error(`Error fetching coordinates for ${area}:`, error);
-        return { area, latitude: null, longitude: null };
-    }
-};
-
-// Get coordinates for all hotspots
-  const getAllHotspotCoordinates = async (hotspots) => {
-    const promises = hotspots.map(area => getCoordinates(area));
-    const results = await Promise.all(promises);
-    return results;
-};
 
 //generate crime hotspots
 let violentCrimeHotspots= generateHotspots(violentCrimesTally);
 let propertyCrimeHotspots=generateHotspots(propertyCrimeTally);
 let drugWeaponHotspots=generateHotspots(drugWeaponCrimesTally);
 let childRelatedHotspots=generateHotspots(childRelatedCrimesTally);
-
-
 
 
 
