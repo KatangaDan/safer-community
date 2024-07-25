@@ -1,10 +1,10 @@
-// import { AREA_DATA } from "./data";
-const { AREA_DATA } = require("./data");
-const express = require("express");
-const bodyParser = require("body-parser");
-const axios = require("axios");
-const cors = require("cors");
-require("dotenv").config();
+import { AREA_DATA } from "./data.js";
+import express from "express";
+import bodyParser from "body-parser";
+import axios from "axios";
+import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;

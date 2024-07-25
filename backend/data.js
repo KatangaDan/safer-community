@@ -1,5 +1,5 @@
 // Example data for Johannesburg areas
-const AREA_DATA = {
+export const AREA_DATA = {
   data: [
     { crime: "abduction", area: "alexandra", rate: 1 },
     { crime: "abduction", area: "eldorado park", rate: 0 },
@@ -768,18 +768,12 @@ function generateHotspots(crimeTally) {
 }
 
 //generate crime hotspots
-let violentCrimeHotspots = generateHotspots(violentCrimesTally);
-let propertyCrimeHotspots = generateHotspots(propertyCrimeTally);
-let drugWeaponHotspots = generateHotspots(drugWeaponCrimesTally);
-let childRelatedHotspots = generateHotspots(childRelatedCrimesTally);
+export const violentCrimeHotspots = generateHotspots(violentCrimesTally);
+export const propertyCrimeHotspots = generateHotspots(propertyCrimeTally);
+export const drugWeaponHotspots = generateHotspots(drugWeaponCrimesTally);
+export const childRelatedHotspots = generateHotspots(childRelatedCrimesTally);
 
-module.exports = {
-  AREA_DATA,
-  violentCrimeHotspots,
-  propertyCrimeHotspots,
-  drugWeaponHotspots,
-  childRelatedHotspots,
-};
+
 
 // export {
 //   AREA_DATA,
