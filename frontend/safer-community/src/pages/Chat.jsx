@@ -8,22 +8,30 @@ import dui from "../assets/racing.png";
 
 export default function Chat() {
   // State to manage loading status
-  const [isLoading, setIsLoading] = useState(false);
+
   const maxChars = 200;
 
+  const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState("");
-  const [userMessages, setUserMessages] = useState([]);
-  const [botMessages, setBotMessages] = useState([
-    "Hello! How can I help you?",
-  ]);
+  // const [userMessages, setUserMessages] = useState([]);
+  // const [botMessages, setBotMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [triggerClick, setTriggerClick] = useState(false);
 
   useEffect(() => {
-    console.log("BOT MESSAGES", botMessages); // This will log the botMessages state whenever it changes
-  }, [botMessages]);
+    if (triggerClick) {
+      handleClick();
+      setTriggerClick(false);
+    }
+  }, [triggerClick]);
 
-  useEffect(() => {
-    console.log("USER MESSAGES", userMessages); // This will log the userMessages state whenever it changes
-  }, [userMessages]);
+  // useEffect(() => {
+  //   console.log("BOT MESSAGES", botMessages); // This will log the botMessages state whenever it changes
+  // }, [botMessages]);
+
+  // useEffect(() => {
+  //   console.log("USER MESSAGES", userMessages); // This will log the userMessages state whenever it changes
+  // }, [userMessages]);
 
   const chatContainerRef = useRef(null);
 
@@ -33,18 +41,36 @@ export default function Chat() {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
-  }, [botMessages, userMessages]);
+  }, [messages]);
 
   // Handle button click
   const handleClick = () => {
+    console.log("CLICK");
+
+    //hide the div with id recPrompts
+    document.getElementById("recPrompts").style.display = "none";
+
     // Get the user query
     const query = input;
+
+    //if the user query is empty, tell the user
+    if (query === "") {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { type: "bot", text: "Please type a query" },
+      ]);
+
+      return;
+    }
 
     //clear the input field
     setInput("");
 
     //add the user message to the userMessages state
-    setUserMessages([...userMessages, query]);
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { type: "user", text: query },
+    ]);
 
     // Set loading to true when button is clicked
     setIsLoading(true);
@@ -58,33 +84,57 @@ export default function Chat() {
 
         //successful response
         if (response.status === 200) {
-          console.log(response.data.response);
-
-          //add the bot response to the botMessages state
-          setBotMessages((prevMessages) => [
+          setMessages((prevMessages) => [
             ...prevMessages,
-            response.data.response,
+            { type: "bot", text: response.data.response },
           ]);
         } else {
-          console.log("Error");
+          //add the error message to the botMessages state
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              type: "bot",
+              text: "Sorry, an error occurred. Please try again later.",
+            },
+          ]);
         }
       })
       .catch((error) => {
         setIsLoading(false);
-        console.error(error);
+        console.log(error);
+        //add the error message to the botMessages state
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            type: "bot",
+            text: "Sorry, something went wrong on our side. Please try again later.",
+          },
+        ]);
       });
   };
 
+  const handleTravelPrompt = () => {
+    setInput("I am travelling to Sandton, what should I be careful for?");
+    console.log("INPUT: ", input);
+    setTriggerClick(true);
+  };
+
+  const handleDUIPrompt = () => {
+    setInput("What are the most common areas of DUIs?");
+    console.log("INPUT: ", input);
+    setTriggerClick(true);
+  };
+
   // Combine bot and user messages for rendering
-  const messages = [];
-  for (let i = 0; i < Math.max(botMessages.length, userMessages.length); i++) {
-    if (i < botMessages.length) {
-      messages.push({ type: "bot", text: botMessages[i] });
-    }
-    if (i < userMessages.length) {
-      messages.push({ type: "user", text: userMessages[i] });
-    }
-  }
+  //const messages = [];
+  // for (let i = 0; i < Math.max(botMessages.length, userMessages.length); i++) {
+  //   if (i < userMessages.length) {
+  //     messages.push({ type: "user", text: userMessages[i] });
+  //   }
+  //   if (i < botMessages.length) {
+  //     messages.push({ type: "bot", text: botMessages[i] });
+  //   }
+  // }
 
   // Function to process text
   const processText = (text) => {
@@ -100,7 +150,7 @@ export default function Chat() {
         className="flex-1 overflow-y-auto p-4 bg-white rounded-lg shadow-md"
       >
         {/* Pre-Prompt Recomendations */}
-        <div className="hidden">
+        <div id="recPrompts" className="">
           <div className=" flex justify-center">
             <img
               src={logo}
@@ -112,7 +162,10 @@ export default function Chat() {
           </div>
           <div className="flex flex-col">
             <div className="mx-auto max-w-5xl gap-6 lg:gap-12 py-4 flex flex-col items-center">
-              <div className="gap-1 border border-gray-500 rounded-lg p-1 flex flex-col justify-center items-center w-[417px] h-[80px] hover hover:bg-[#e3fadb] cursor-pointer">
+              <div
+                className="gap-1 border border-gray-500 rounded-lg p-1 flex flex-col justify-center items-center w-[417px] h-[80px] hover hover:bg-[#e3fadb] cursor-pointer"
+                onClick={handleTravelPrompt}
+              >
                 <img
                   src={destination}
                   width="30"
@@ -124,7 +177,10 @@ export default function Chat() {
                   I am travelling to Sandton, what should I be careful for?
                 </p>
               </div>
-              <div className="flex flex-col justify-center items-center gap-1 border border-gray-500 rounded-lg p-1 w-[417px] h-[80px] hover hover:bg-[#e3fadb] cursor-pointer">
+              <div
+                className="flex flex-col justify-center items-center gap-1 border border-gray-500 rounded-lg p-1 w-[417px] h-[80px] hover hover:bg-[#e3fadb] cursor-pointer"
+                onClick={handleDUIPrompt}
+              >
                 <img
                   src={dui}
                   width="40"
@@ -190,7 +246,8 @@ export default function Chat() {
               ? "bg-[#1F5014] cursor-not-allowed hover:bg-none"
               : "bg-[#1F5014] hover:border-white hover:bg-[#163f0d]"
           }`}
-          onClick={handleClick}
+          onClick={() => setTriggerClick(true)}
+          disabled={isLoading} // Disable the button when loading
         >
           {isLoading ? (
             <div className="btnloader"></div> // Loader is displayed when loading
