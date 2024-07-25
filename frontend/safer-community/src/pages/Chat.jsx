@@ -139,6 +139,7 @@ export default function Chat() {
             </div>
           </div>
         </div>
+
         <div className="space-y-4">
           {messages.map((message, index) =>
             message.type === "bot" ? (

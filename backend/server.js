@@ -1,4 +1,5 @@
-import { AREA_DATA } from "./data";
+// import { AREA_DATA } from "./data";
+const { AREA_DATA } = require("./data");
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
@@ -15,8 +16,6 @@ app.use(bodyParser.json());
 
 // OpenAI API Key
 const OPENAI_API_KEY = process.env.CHATGPT_API_KEY;
-
-
 
 // Define a combined prompt for both safety advice and emergency numbers
 const BASE_PROMPT = `
