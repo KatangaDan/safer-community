@@ -45,7 +45,7 @@ export default function Component() {
         </div>
       </header>
 
-      <main className="w-4/5 h-[calc(100dvh-56px)] mx-auto p-4">
+      <main className="w-[80%] max-md:w-[100%] h-[calc(100dvh-56px)] mx-auto p-4">
         <Chat />
       </main>
     </div>

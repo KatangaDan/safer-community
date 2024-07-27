@@ -46,7 +46,7 @@ export default function Component() {
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h1 className="text-3xl text-black font-bold tracking-tighter sm:text-5xl xl:text-6xl/none overflow-hidden">
+                  <h1 className="text-3xl text-black font-bold tracking-tighter sm:text-5xl xl:text-6xl/none ">
                     Welcome to SaferCommunity
                   </h1>
                   <p className="max-w-[600px] text-gray-700 md:text-xl">
@@ -130,7 +130,7 @@ export default function Component() {
           </div>
         </section>
       </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+      <footer className="bg-black flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-muted-foreground">
           &copy; 2024 SaferCommunity. All rights reserved.
         </p>

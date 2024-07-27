@@ -144,7 +144,7 @@ export default function Chat() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#7D9B76] p-4">
+    <div className="flex flex-col h-full bg-[#7D9B76] p-4 w-[100%]">
       <div
         ref={chatContainerRef}
         className="flex-1 overflow-y-auto p-4 bg-white rounded-lg shadow-md"
