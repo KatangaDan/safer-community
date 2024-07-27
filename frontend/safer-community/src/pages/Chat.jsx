@@ -114,6 +114,14 @@ export default function Chat() {
       });
   };
 
+  // Handle keydown event
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent the default form submission
+      handleClick();
+    }
+  };
+
   const handleTravelPrompt = () => {
     setInput("I am travelling to Sandton, what should I be careful for?");
     console.log("INPUT: ", input);
@@ -240,6 +248,7 @@ export default function Chat() {
           placeholder="Type a message..."
           className="w-full p-4 text-sm bg-white border rounded-full shadow-md text-black"
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <Button
           className={`p-2 text-white rounded-full w-14 ${

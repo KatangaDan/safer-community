@@ -9,6 +9,8 @@ import "leaflet/dist/leaflet.css";
 import Loader from "./Loader"; // Ensure this is the correct path to your Loader component
 import axios from "axios";
 import Footer from "@/components/ui/footer";
+import tippy from "tippy.js";
+import "tippy.js/dist/tippy.css"; // Optional: import CSS for default styles
 
 import {
   violentCrimeHotspots,
@@ -98,25 +100,40 @@ export default function Component() {
             // Add styles for the <i> elements
             const style = document.createElement("style");
             style.innerHTML = `
-            .info.legend i {
-              width: 15px;
-              height: 15px;
-              float: left;
-              margin-right: 8px;
-              opacity: 0.7;
-
-            }
-          `;
+              .info.legend i {
+                width: 15px;
+                height: 15px;
+                float: left;
+                margin-right: 8px;
+                opacity: 0.7;              
+              }
+            `;
             document.head.appendChild(style);
+
             for (let i = 0; i < categories.length; i++) {
+              const crime = categories[i];
+              const color = crimeColors[crime];
+
+              // Add <i> element for tooltip
               div.innerHTML +=
                 '<i style="background:' +
-                crimeColors[categories[i]] +
-                '"></i> ' +
-                '<span style="color: black;">' +
-                categories[i] +
+                color +
+                '" "' +
+                crime +
+                ' details">' +
+                "</i> " +
+                '<span data-tippy-content="Testing" style="color: black;">' +
+                crime +
                 "</span><br>";
             }
+
+            // Append div to the document to ensure it's available for Tippy.js
+            div.appendChild(style);
+
+            // Initialize Tippy tooltips
+            tippy(div.querySelectorAll(".info.legend span"), {
+              placement: "top",
+            });
 
             return div;
           };
