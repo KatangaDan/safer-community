@@ -5,6 +5,7 @@ import axios from "axios";
 import logo from "../assets/logo.png";
 import destination from "../assets/destination.png";
 import dui from "../assets/racing.png";
+import Footer from "@/components/ui/footer";
 
 export default function Chat() {
   // State to manage loading status
