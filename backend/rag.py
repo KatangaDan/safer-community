@@ -8,11 +8,16 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_chroma import Chroma
 import os
 import json
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 
 # Manually set the OpenAI API key
-os.environ["OPENAI_API_KEY"] = "sk-proj-dulUnhle3JisV4VYkj10T3BlbkFJYeeY61XRbWkbYaR0dIZf"
+os.environ["OPENAI_API_KEY"] = os.getenv("CHATGPT_API_KEY")
 
 # Initialize GPT model
 llm = ChatOpenAI(model="gpt-4o", max_tokens=500)
@@ -54,7 +59,7 @@ def query():
         return jsonify({'error': 'Question is required'}), 400
 
     # Load JSON data from a file
-    with open('data.json', 'r') as f:
+    with open('jsondata.json', 'r') as f:
         documents = json.load(f)
 
     # Convert JSON data into LangChain's Document format
