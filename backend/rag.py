@@ -11,13 +11,14 @@ import json
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env file
-load_dotenv()
 
 app = Flask(__name__)
 
-# Manually set the OpenAI API key
-os.environ["OPENAI_API_KEY"] = os.getenv("CHATGPT_API_KEY")
+# Manually set the OpenAI API key from the environment variable
+openai_api_key = os.getenv("CHATGPT_API_KEY")
+
+if not openai_api_key:
+    raise ValueError("No OpenAI API key provided")
 
 # Initialize GPT model
 llm = ChatOpenAI(model="gpt-4o", max_tokens=500)
