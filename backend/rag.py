@@ -11,7 +11,6 @@ import json
 from dotenv import load_dotenv
 import os
 
-
 app = Flask(__name__)
 
 # Manually set the OpenAI API key from the environment variable
