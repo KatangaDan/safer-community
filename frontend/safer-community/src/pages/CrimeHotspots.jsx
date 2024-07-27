@@ -213,7 +213,7 @@ export default function Component() {
       <header className="px-4 lg:px-6 h-14 flex items-center justify-between">
         <div className="flex items-center gap-4 sm:gap-6">
           <Link
-            to="#"
+            to="/"
             className="flex items-center justify-center text-black hover:text-[#7D9B76]"
             prefetch="false"
           >
@@ -221,19 +221,22 @@ export default function Component() {
             <span className="sr-only">SaferCommunity</span>
           </Link>
           <nav className="flex gap-4 sm:gap-6">
-            <img
+            {/* <img
               src={crimeHotspot}
               width="30"
               height="30"
               alt="Crime Hotspots"
-            />
+            /> */}
             <Link
-              to="/home"
+              to="/chatbot"
               className="text-xl text-black hover:text-[#7D9B76] font-medium hover:underline underline-offset-4"
               prefetch="false"
             >
               Safety AI Chatbot
             </Link>
+            <h2 className="text-xl text-[#7D9B76] hover:text-[#7D9B76] font-medium hover:underline underline-offset-4">
+              Crime Hotspots
+            </h2>
           </nav>
         </div>
       </header>
