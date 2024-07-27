@@ -759,7 +759,7 @@ function generateHotspots(crimeTally) {
     crimeRates.reduce((a, b) => a + Math.pow(b - mean, 2), 0) /
     crimeRates.length;
   const standardDeviation = Math.sqrt(variance);
-  const threshold = mean + standardDeviation;
+  const threshold = mean + 0.5*standardDeviation;
 
   const hotspots = Object.keys(crimeTally).filter(
     (area) => crimeTally[area] > threshold
