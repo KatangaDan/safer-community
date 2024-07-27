@@ -9,38 +9,40 @@ from langchain_chroma import Chroma
 import os
 import json
 from dotenv import load_dotenv
-import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 
-# Manually set the OpenAI API key from the environment variable
+# Get the OpenAI API key from environment variable
 openai_api_key = os.getenv("CHATGPT_API_KEY")
 
 if not openai_api_key:
     raise ValueError("No OpenAI API key provided")
 
-# Initialize GPT model
-llm = ChatOpenAI(model="gpt-4o", max_tokens=500)
+print(f"Using OpenAI API Key: {openai_api_key}")  # Debugging statement
+
+# Initialize GPT model with the correct API key
+llm = ChatOpenAI(model="gpt-4o", max_tokens=500, api_key=openai_api_key)
 
 # Define your custom prompt
 prompt = PromptTemplate(
     input_variables=['context', 'question'],
     template=(
-        "You are an AI specializing in providing safety advice and emergency information for travelers in Johannesburg"
-        "The data provided includes crime, the area, and the rate (amount of times it has happened since 2023) Avoid showing rates unless asked for.\n\n"
+        "You are an AI specializing in providing safety advice and emergency information for travelers in Johannesburg. "
+        "The data provided includes crime, the area, and the rate (amount of times it has happened since 2023). Avoid showing rates unless asked for.\n\n"
         "Act generally kind, helpful, reassuring, and informative. "
-        "Do not provide information on other topics, redirect any questions back to safety"
-        "If a user asks a question related to safety or crime, provide a detailed answer to that question. (for example, if they ask about the dangers of a specific area, provide the most common crimes in that area)"
+        "Do not provide information on other topics; redirect any questions back to safety. "
+        "If a user asks a question related to safety or crime, provide a detailed answer to that question. (for example, if they ask about the dangers of a specific area, provide the most common crimes in that area). "
         "Provide emergency contact numbers and the address of that area's police station, if they witness a crime, or if they are in danger. "
-
         "Emergency Numbers:\n"
         "1. Police: 10111\n"
         "2. Ambulance: 10177\n"
         "3. Fire Department: 011 375 5911\n"
         "4. General Emergency: 112 (on mobile)\n\n"
-
-        "Question: {question} \n"
-        "Context: {context} \n"
+        "Question: {question}\n"
+        "Context: {context}\n"
         "Answer:"
     )
 )
@@ -79,17 +81,14 @@ def query():
 
     # Create a vector store from the split documents
     vectorstore = Chroma.from_documents(
-        documents=splits, embedding=OpenAIEmbeddings())
+        documents=splits, embedding=OpenAIEmbeddings(api_key=openai_api_key))
 
     # Create a retriever
     retriever = vectorstore.as_retriever()
 
     # Define the RAG chain
     rag_chain = (
-        {
-            "context": retriever | format_docs,
-            "question": RunnablePassthrough()
-        }
+        {"context": retriever | format_docs, "question": RunnablePassthrough()}
         | prompt
         | llm
         | StrOutputParser()
