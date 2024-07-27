@@ -5,10 +5,13 @@ import axios from "axios";
 import logo from "../assets/logo.png";
 import destination from "../assets/destination.png";
 import dui from "../assets/racing.png";
+import Footer from "@/components/ui/footer";
 
 export default function Chat() {
-  const maxChars = 200;
   // State to manage loading status
+
+  const maxChars = 200;
+
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState("");
   // const [userMessages, setUserMessages] = useState([]);
@@ -75,7 +78,7 @@ export default function Chat() {
 
     //send the user query to the backend
     axios
-      .post("http://localhost:3000/query", { question: query })
+      .post("http://localhost:3000/query", { query })
       .then((response) => {
         //hide the loader
         setIsLoading(false);
@@ -123,19 +126,24 @@ export default function Chat() {
     setTriggerClick(true);
   };
 
+  // Combine bot and user messages for rendering
+  //const messages = [];
+  // for (let i = 0; i < Math.max(botMessages.length, userMessages.length); i++) {
+  //   if (i < userMessages.length) {
+  //     messages.push({ type: "user", text: userMessages[i] });
+  //   }
+  //   if (i < botMessages.length) {
+  //     messages.push({ type: "bot", text: botMessages[i] });
+  //   }
+  // }
+
   // Function to process text
   const processText = (text) => {
-    // Replace text following ### with extra bold (using both <strong> and <b> for extra bold)
-    const extraBoldText = text.replace(
-      /###\s*(.*?)(?=\n|$)/g,
-      "<strong><b>$1</b></strong>"
-    );
-    // Replace text between ** with bold
-    const boldText = extraBoldText.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
-    // Replace new lines with <br> for HTML formatting
+    const boldText = text.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
     const formattedText = boldText.replace(/\n/g, "<br>");
     return { __html: formattedText };
   };
+
   return (
     <div className="flex flex-col h-full bg-[#7D9B76] p-4 w-[100%]">
       <div
