@@ -8,6 +8,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Loader from "./Loader"; // Ensure this is the correct path to your Loader component
 import axios from "axios";
+import Footer from "@/components/ui/footer";
 
 import {
   violentCrimeHotspots,
@@ -244,27 +245,7 @@ export default function Component() {
           style={{ height: "500px", width: "100%" }}
         ></div>
       </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-black">
-          &copy; 2024 SaferCommunity. All rights reserved.
-        </p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link
-            to="#"
-            className="text-xs hover:underline underline-offset-4 text-black"
-            prefetch="false"
-          >
-            Terms of Service
-          </Link>
-          <Link
-            to="#"
-            className="text-xs hover:underline underline-offset-4 text-black"
-            prefetch="false"
-          >
-            Privacy
-          </Link>
-        </nav>
-      </footer>
+      <Footer />
     </div>
   );
 }
