@@ -1,4 +1,4 @@
-// Example data for Johannesburg areas
+//  data for Johannesburg areas
 export const AREA_DATA = {
   data: [
     { crime: "abduction", area: "alexandra", rate: 1 },
